@@ -1,0 +1,74 @@
+openapi: 3.0.0
+info:
+  title: API
+  contact: {}
+  version: '1.0'
+servers:
+  - url: http://localhost:8085/api
+    variables: {}
+paths:
+  /auth:
+    post:
+      tags:
+        - Misc
+      summary: Auth
+      operationId: Auth
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRequest'
+            example:
+              email: admin@admin.com
+              password: admin2
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /groups:
+    get:
+      tags:
+        - Misc
+      summary: List Groups
+      operationId: ListGroups
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /customers:
+    get:
+      tags:
+        - Misc
+      summary: List Customers
+      operationId: ListCustomers
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+components:
+  schemas:
+    AuthRequest:
+      title: AuthRequest
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: admin@admin.com
+        password: admin2
+tags:
+  - name: Misc
+    description: ''
