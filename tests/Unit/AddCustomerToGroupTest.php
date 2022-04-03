@@ -12,7 +12,7 @@ dataset('group dataset', [
     [fn() => Customer::factory()->createOne()->id, 1],
     [fn() => Customer::factory()->createOne()->id, 2]
 ]);
-test('deve adicionar cliente em um grupo', function ($customer_id, $group_id) {
+test('deve adicionar cliente em um grupo', function (int $customer_id, int $group_id) {
     Group::factory()->count(2)->create();
     $result = AddCustomerToGroup::run($customer_id, $group_id);
     expect($result->id)->toBe($customer_id);
