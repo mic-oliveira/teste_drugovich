@@ -12,6 +12,16 @@ Adicionado conexão ao container de mysql no arquivo .env.example e após copiad
 
 # Executar migrations
 `docker-compose exec web php artisan migrate:fresh --seed`
+
+## O usuário para login na api
+
+### Usuário com acesso nivel 2
+- email: teste@admin.com
+- password: admin
+
+### Usuário com acesso nivel 2
+- email: admin@admin.com
+- password: admin
  
 ## Executar testes com Pest
 `docker-compose exec web php vendor/bin/pest`
