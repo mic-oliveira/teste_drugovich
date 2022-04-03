@@ -7,6 +7,7 @@ servers:
 
   - url: http://localhost:8085/api
     variables: {}
+
 paths:
   /auth:
     post:
@@ -90,28 +91,35 @@ paths:
       servers:
         - url: http://localhost:8085/api
           variables: {}
-  /groups/1:
+  /groups/{groupId}:
+    parameters:
+      - name: groupId
+        in: path
+        required: true
+        description: Id do grupo que será removido
+        schema:
+          type: integer
+          format: int64
+          minimum: 1
+          example: 1
     get:
       tags:
         - Misc
       summary: Busca de grupo por id
       operationId: FindGroup
-      parameters: []
       responses:
         '200':
           description: ''
-          headers: {}
+          headers: { }
       deprecated: false
       servers:
         - url: http://localhost:8085/api
-          variables: {}
-  /groups/{id}:
+          variables: { }
     put:
       tags:
         - Misc
       summary: Atualização de grupo
       operationId: UpdateGroup
-      parameters: []
       requestBody:
         description: ''
         content:
@@ -124,21 +132,22 @@ paths:
       responses:
         '200':
           description: ''
-          headers: {}
+          headers: { }
       deprecated: false
       servers:
         - url: http://localhost:8085/api
-          variables: {}
-  /groups/3:
+          variables: { }
     delete:
       tags:
         - Misc
       summary: Deleta grupo por id
       operationId: DeleteGroup
-      parameters: []
       responses:
         '200':
-          description: ''
+          description: 'Grupo deletado e retorna json do objeto removido'
+          headers: {}
+        '404':
+          description: 'Grupo não encontrado'
           headers: {}
       deprecated: false
       servers:
@@ -159,7 +168,7 @@ paths:
           explode: true
           schema:
             type: string
-            example: teste3
+            example: ''
         - name: filter[group_id]
           in: query
           description: ''
@@ -168,7 +177,7 @@ paths:
           explode: true
           schema:
             type: integer
-            example: 1
+            example: 0
         - name: filter[group_name]
           in: query
           description: ''
@@ -177,7 +186,7 @@ paths:
           explode: true
           schema:
             type: string
-            example: grupo 1
+            example: ''
         - name: page
           in: query
           description: ''
@@ -187,10 +196,10 @@ paths:
           schema:
             type: integer
             format: int32
-            example: 1
+            example: 0
       responses:
         '200':
-          description: ''
+          description: 'Retorna lista paginada de clientes'
           headers: {}
       deprecated: false
       servers:
@@ -215,13 +224,25 @@ paths:
         required: true
       responses:
         '200':
-          description: ''
+          description: 'Adiciona cliente ao grupo'
           headers: {}
+        '404':
+          description: 'Cliente ou grupo não encontrado'
       deprecated: false
       servers:
         - url: http://localhost:8085/api
           variables: {}
-  /customer_groups/1:
+  /customer_groups/{customerId}:
+    parameters:
+      - name: customerId
+        in: path
+        required: true
+        description: Id do grupo que será removido
+        schema:
+          type: integer
+          format: int64
+          minimum: 1
+          example: 1
     delete:
       tags:
         - Misc
@@ -232,6 +253,8 @@ paths:
         '200':
           description: 'Remove cliente de grupo'
           headers: {}
+        '404':
+          description: 'Cliente não encontrado'
       deprecated: false
       servers:
         - url: http://localhost:8085/api
@@ -297,3 +320,4 @@ security:
 tags:
   - name: Misc
     description: ''
+
