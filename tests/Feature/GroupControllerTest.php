@@ -13,7 +13,7 @@ test('deve estar autenticado para acessar grupos', function () {
     $response->assertStatus(200);
 });
 
-test('deve bloquear acesso de pessoas não autenticadas', function () {
+test('deve bloquear acesso de gerentes não autenticadas', function () {
     $response = $this->getJson('api/groups');
     $response->assertStatus(401);
 });
@@ -100,4 +100,10 @@ test('deve exibir grupo para gerentes com nível de acesso 2', function () {
 })->with([
     fn() => Group::factory()->create()
 ]);
+
+test('deve retornar status 422 em caso de falha de validação', function () {
+    actingAs(Manager::factory()->state(['access_level' => 2])->create());
+    $response = $this->postJson('api/groups', ["name" => null]);
+    $response->assertStatus(422);
+});
 

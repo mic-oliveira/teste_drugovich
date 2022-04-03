@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\AddCustomerToGroup;
 use App\Actions\RemoveCustomerFromGroup;
+use App\Http\Requests\CustomerGroupRequest;
 use App\Http\Resources\CustomerResource;
 use App\Models\Customer;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -26,14 +27,15 @@ class CustomerGroupController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param CustomerGroupRequest $request
      * @return CustomerResource
+     * @throws AuthorizationException
      */
-    public function store(Request $request): CustomerResource
+    public function store(CustomerGroupRequest $request): CustomerResource
     {
         $this->authorize('add-group', Customer::class);
         return CustomerResource::make(
-            AddCustomerToGroup::run($request->get('customer_id'), $request->get('group_id'))
+            AddCustomerToGroup::run($request->validated('customer_id'), $request->validated('group_id'))
         );
     }
 
@@ -51,7 +53,7 @@ class CustomerGroupController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
      * @return Response
      */

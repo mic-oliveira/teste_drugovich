@@ -38,9 +38,9 @@ class CustomerPolicy
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Customer $customer)
+    public function view(User $user)
     {
-        //
+        return $user->access_level == 1 || $user->access_level == 2;
     }
 
     /**
