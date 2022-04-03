@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\AddCustomerToGroup;
+use App\Actions\RemoveCustomerFromGroup;
+use App\Http\Resources\CustomerResource;
+use App\Models\Customer;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 class CustomerGroupController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -20,18 +27,21 @@ class CustomerGroupController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return CustomerResource
      */
-    public function store(Request $request)
+    public function store(Request $request): CustomerResource
     {
-        //
+        $this->authorize('add-group', Customer::class);
+        return CustomerResource::make(
+            AddCustomerToGroup::run($request->get('customer_id'), $request->get('group_id'))
+        );
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -43,7 +53,7 @@ class CustomerGroupController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -53,11 +63,13 @@ class CustomerGroupController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return CustomerResource
+     * @throws AuthorizationException
      */
-    public function destroy($id)
+    public function destroy(int $id): CustomerResource
     {
-        //
+        $this->authorize('remove-group', Customer::class);
+        return CustomerResource::make(RemoveCustomerFromGroup::run($id));
     }
 }

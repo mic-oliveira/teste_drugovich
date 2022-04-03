@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\FindCustomer;
 use App\Actions\ListCustomers;
 use App\Http\Resources\CustomerResource;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -12,6 +14,7 @@ class CustomerController extends Controller
 
     public function index(): AnonymousResourceCollection
     {
+        $this->authorize('viewAny', Customer::class);
         return CustomerResource::collection(ListCustomers::run());
     }
 
@@ -29,12 +32,14 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return CustomerResource
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show($id)
     {
-        //
+        $this->authorize('view', Customer::class);
+        return CustomerResource::make(FindCustomer::run($id));
     }
 
     /**

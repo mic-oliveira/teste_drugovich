@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Customer;
+use App\Models\Manager;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -10,6 +11,15 @@ class CustomerPolicy
 {
     use HandlesAuthorization;
 
+    public function addGroup(Manager $user)
+    {
+        return $user->access_level == 1 || $user->access_level == 2;
+    }
+
+    public function removeGroup(Manager $user)
+    {
+        return $user->access_level == 1 || $user->access_level == 2;
+    }
     /**
      * Determine whether the user can view any models.
      *
@@ -18,7 +28,7 @@ class CustomerPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->access_level == 1 || $user->access_level == 2;
     }
 
     /**

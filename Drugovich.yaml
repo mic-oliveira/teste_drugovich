@@ -1,9 +1,10 @@
 openapi: 3.0.0
 info:
-  title: API
+  title: Teste Drugovich
   contact: {}
   version: '1.0'
 servers:
+
   - url: http://localhost:8085/api
     variables: {}
 paths:
@@ -11,7 +12,7 @@ paths:
     post:
       tags:
         - Misc
-      summary: Auth
+      summary: Autenticação
       operationId: Auth
       parameters: []
       requestBody:
@@ -22,37 +23,219 @@ paths:
               $ref: '#/components/schemas/AuthRequest'
             example:
               email: admin@admin.com
-              password: admin2
+              password: admin
         required: true
       responses:
         '200':
           description: ''
           headers: {}
       deprecated: false
+      servers:
+        - url: http://localhost:8085/api
+          variables: {}
   /groups:
     get:
       tags:
         - Misc
-      summary: List Groups
+      summary: Listagem de Grupos
       operationId: ListGroups
+      parameters:
+        - name: filter[name]
+          in: query
+          description: ''
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: teste3
+        - name: page
+          in: query
+          description: ''
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+            example: 1
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+        - url: http://localhost:8085/api
+          variables: {}
+    post:
+      tags:
+        - Misc
+      summary: Criação de Grupos
+      operationId: CreateGroups
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGroupsRequest'
+            example:
+              name: Grupo teste
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+        - url: http://localhost:8085/api
+          variables: {}
+  /groups/1:
+    get:
+      tags:
+        - Misc
+      summary: Busca de grupo por id
+      operationId: FindGroup
       parameters: []
       responses:
         '200':
           description: ''
           headers: {}
       deprecated: false
+      servers:
+        - url: http://localhost:8085/api
+          variables: {}
+  /groups/{id}:
+    put:
+      tags:
+        - Misc
+      summary: Atualização de grupo
+      operationId: UpdateGroup
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateGroupRequest'
+            example:
+              name: Teste 2
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+        - url: http://localhost:8085/api
+          variables: {}
+  /groups/3:
+    delete:
+      tags:
+        - Misc
+      summary: Deleta grupo por id
+      operationId: DeleteGroup
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+        - url: http://localhost:8085/api
+          variables: {}
   /customers:
     get:
       tags:
         - Misc
-      summary: List Customers
+      summary: Listagem de Clientes
       operationId: ListCustomers
-      parameters: []
+      parameters:
+        - name: filter[name]
+          in: query
+          description: ''
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: teste3
+        - name: filter[group_id]
+          in: query
+          description: ''
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            example: 1
+        - name: filter[group_name]
+          in: query
+          description: ''
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: grupo 1
+        - name: page
+          in: query
+          description: ''
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int32
+            example: 1
       responses:
         '200':
           description: ''
           headers: {}
       deprecated: false
+      servers:
+        - url: http://localhost:8085/api
+          variables: {}
+  /customer_groups:
+    post:
+      tags:
+        - Misc
+      summary: Adiciona cliente a um grupo
+      operationId: AddCustomertoGroup
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddCustomertoGroupRequest'
+            example:
+              customer_id: 1
+              group_id: 1
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+        - url: http://localhost:8085/api
+          variables: {}
+  /customer_groups/1:
+    delete:
+      tags:
+        - Misc
+      summary: Remove cliente de grupo
+      operationId: RemoveCustomerFromGroup
+      parameters: []
+      responses:
+        '200':
+          description: 'Remove cliente de grupo'
+          headers: {}
+      deprecated: false
+      servers:
+        - url: http://localhost:8085/api
+          variables: {}
 components:
   schemas:
     AuthRequest:
@@ -68,7 +251,49 @@ components:
           type: string
       example:
         email: admin@admin.com
-        password: admin2
+        password: admin
+    CreateGroupsRequest:
+      title: CreateGroupsRequest
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: Grupo teste
+    UpdateGroupRequest:
+      title: UpdateGroupRequest
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: Teste 2
+    AddCustomertoGroupRequest:
+      title: AddCustomertoGroupRequest
+      required:
+        - customer_id
+        - group_id
+      type: object
+      properties:
+        customer_id:
+          type: integer
+          format: int32
+        group_id:
+          type: integer
+          format: int32
+      example:
+        customer_id: 1
+        group_id: 1
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security:
+  - bearer: []
 tags:
   - name: Misc
     description: ''

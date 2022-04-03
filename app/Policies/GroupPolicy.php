@@ -20,7 +20,7 @@ class GroupPolicy
      */
     public function viewAny(Manager $user): bool
     {
-        return $user->access_level ===1 || $user->access_level === 2;
+        return $user->access_level ==1 || $user->access_level == 2;
     }
 
     /**
@@ -32,7 +32,7 @@ class GroupPolicy
      */
     public function view(Manager $user)
     {
-        return $user->access_level === 1 || $user->access_level === 2;
+        return $user->access_level == 1 || $user->access_level == 2;
     }
 
     /**
@@ -43,7 +43,7 @@ class GroupPolicy
      */
     public function create(Manager $user)
     {
-        return $user->access_level === 2;
+        return $user->access_level == 2;
     }
 
     /**
@@ -54,7 +54,7 @@ class GroupPolicy
      */
     public function update(Manager $user): bool
     {
-        return $user->access_level === 2;
+        return $user->access_level == 2;
     }
 
     /**
@@ -65,30 +65,6 @@ class GroupPolicy
      */
     public function delete(Manager $user): bool
     {
-        return $user->access_level === 2;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param User $user
-     * @param Group $group
-     * @return Response|bool
-     */
-    public function restore(User $user, Group $group)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param User $user
-     * @param Group $group
-     * @return Response|bool
-     */
-    public function forceDelete(User $user, Group $group)
-    {
-        //
+        return $user->access_level == 2;
     }
 }

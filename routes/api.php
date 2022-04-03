@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CustomerGroupController;
 use App\Http\Controllers\GroupController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,8 @@ Route::post('/auth', [AuthController::class, 'authenticate']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/groups', GroupController::class);
 
-    Route::resource('/customers', CustomerController::class);
+    Route::resource('/customers', CustomerController::class)->only(['index','show']);
+
+    Route::resource('/customer_groups', CustomerGroupController::class)->only(['destroy','store']);
 });
 

@@ -61,7 +61,7 @@ class GroupController extends Controller
      */
     public function update(UpdateGroupRequest $request, int $id): GroupResource
     {
-        $this->authorize('update');
+        $this->authorize('update', Group::class);
         return GroupResource::make(UpdateGroup::run($request->validated(), $id));
     }
 
@@ -74,7 +74,7 @@ class GroupController extends Controller
      */
     public function destroy(int $id): GroupResource
     {
-        $this->authorize('destroy');
+        $this->authorize('delete', Group::class);
         return GroupResource::make(DeleteGroup::run($id));
     }
 }
