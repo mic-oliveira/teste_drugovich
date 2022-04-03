@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    image: aronpc/cati-php:latest-nginx
+    image: aronpc/cati-php:8.1-nginx
     working_dir: /app
     volumes:
       - ./:/app
@@ -9,8 +9,6 @@ services:
       - mysql
     ports:
       - '8085:8080'
-    labels:
-      - 'traefik.frontend.rule=Host:$APP_NAME.drugovich'
 
   mysql:
     image: mysql:latest
@@ -20,20 +18,11 @@ services:
       MYSQL_DATABASE: $DB_DATABASE
     volumes:
       - mysql:/data/mysql
-    labels:
-      - 'traefik.enable=false'
 
   adminer:
     image: adminer
     ports:
       - '8099:8080'
-    labels:
-      - 'traefik.frontend.rule=Host:adminer.drugovich'
-
-networks:
-  default:
-    external:
-      name: web
 
 volumes:
   mysql:
