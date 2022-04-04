@@ -28,7 +28,7 @@ Adicionado conexão ao container de mysql no arquivo .env.example e após copiad
 
 ## Documentação da api
 O arquivo de documentação encontra-se no arquivo Drugovich.yml e está utlizando o formato de openApi v3. Ela também encontra-se disponível através da url: <br>
-`https://mic-oliveira.github.io/teste_drugovich/` <br>
+https://mic-oliveira.github.io/teste_drugovich/ <br>
 Porém como o projeto encontra-se em localhost ele não enviará as respostas de API através do git pages.
 
 ## Pipeline
