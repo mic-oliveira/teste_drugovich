@@ -205,6 +205,29 @@ paths:
       servers:
         - url: http://localhost:8085/api
           variables: {}
+  /customers/{userId}:
+    get:
+      tags:
+        - Misc
+      summary: Listagem de Clientes
+      operationId: ListCustomers
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: Id do cliente
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        '200':
+          description: 'Retorna cliente com determinado id'
+          headers: { }
+      deprecated: false
+      servers:
+        - url: http://localhost:8085/api
+          variables: { }
   /customer_groups:
     post:
       tags:
@@ -237,7 +260,7 @@ paths:
       - name: customerId
         in: path
         required: true
-        description: Id do grupo que será removido
+        description: ID Grupo
         schema:
           type: integer
           format: int64
