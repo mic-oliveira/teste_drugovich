@@ -15,7 +15,7 @@ Adicionado conexão ao container de mysql no arquivo .env.example e após copiad
 
 ## O usuário para login na api
 
-### Usuário com acesso nivel 2
+### Usuário com acesso nivel 1
 - email: teste@admin.com
 - password: admin
 
